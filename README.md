@@ -28,6 +28,15 @@ Para ejecutar este código de manera local, podemos únicamente ejecutar la apli
 
 ### Pre-requisitos
 
+Es importante tener un ambiente adecuado para ejecutar los componentes, en especial es importante que las versiones sean las correctas, a continuación se presentan los componentes y versiones con las que el modelo fue probado:
+
+|python| |
+|-|-|
+|tensorflow| |
+|matplotlib| |
+|pandas| |
+|numpy| |
+
 ### Ejecutar el modelo (Paso opcional)
 
 ### Ejecutar la aplicación
