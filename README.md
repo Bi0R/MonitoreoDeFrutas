@@ -19,8 +19,10 @@ Como se mencionó antes el proyecto se divide en dos partes el modelo y la soluc
 Dentro de la estructura del proyecto se encuentra la carpeta **modelo** aquí se encuentra el código necesarrio para entrenar el modelo y aunque se incluye la carpeta **data** en realidad no se incluye el dataset pues debido a la cantidad de fotografías el repositorio se volvería demasido pesado (se debe descargar por separado si se quiere ejecutar en local).
 Se recomienda usar esta ruta para guardar la training data, pero en el archivo modelo se puede modificar la ruta.
 
+En esta carpeta se incluye el archivo **modelo.keras** que incluye el modelo ya entrenado.
 
-### Solucion
+
+### Solución
 
 Al mismo nivel que la carpeta **modelo** encontramos la carpeta **solucion** aqui es donde encontramos el código de la aplicación que usa el modelo que entrenamos en la otra sección de código, no es necesario entrenar el modelo cada vez que se quiere ejecutar la aplicación.
 
@@ -42,7 +44,7 @@ Es importante tener un ambiente adecuado para ejecutar los componentes, en espec
 
 ### Ejecucion del modelo
 
-**Nota** Es importante resaltar que no es estrictiamente necesaria la ejecución del modelo para ejecutar la solución, pues el modelo ya fue entrenado y se guardo una opción valida para ser usada como parte de la solución; sin embargo, si se desea ejecutar todo desde el principio también es posible.
+**Nota** Es importante resaltar que no es estrictiamente necesaria la ejecución del modelo para ejecutar la solución.
 
 En primer lugar para ejecutar el modelo debemos estar seguros de las rutas necesarias estan bien establecidas, al inicio del archivo python tenemos 3 rutas que hay que modificar:
 
@@ -52,9 +54,11 @@ En primer lugar para ejecutar el modelo debemos estar seguros de las rutas neces
 
 Estas rutas representan respectivamente la ruta donde se encuentran los archivos de entrenamiento, la ruta donde se encuentran los archivos de prueba y la ruta donde se guarda el modelo keras ya entrenado.
 
+Adicionalmente se tiene una variable llamada **ejecucion_con_grafica** en el código esta definida como False, con esto se evita que se muestre una grafica de barras que muestra el número de coincidencias por categoría. Lo anterior no es parte de la creación del modelo sino una exploración inicial, no es estrictamente necesario ejecutar ese código, pero se deja en caso de que se quiera hacer una análisis exploratorio inicial de los datos.  Para poder ver la gráfica habría que definir el valor de la varibale como True.
 
+Este es un ejemplo de la gráfica generada:
 
-
+![Grafica de coincidencias](figura1.png)
 
 
 ### Ejecutar el modelo (Paso opcional)

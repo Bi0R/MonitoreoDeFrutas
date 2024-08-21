@@ -1,23 +1,23 @@
 #Primero realizamos los imports necesarios
-# Bibliotecas para manejode datos
+# Bibliotecas para manejo de datos
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 # Necesario para manejo de archivos
 import os
-# Dataset generation
+# Manejo de dataset
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import preprocessing
 from tensorflow.keras.preprocessing import image_dataset_from_directory
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-# Transfert learning
+# Inician dependencias para el modelo
 from tensorflow.keras.applications import VGG16
-# Optimizer
+# Optimizador
 from tensorflow.keras.optimizers import Adam
-# Keras layers
+#Layers de Keras
 from tensorflow.keras.layers import Input, Dense, Dropout, Flatten, AveragePooling2D
-# Keras model
+#Modelo Keras
 from tensorflow.keras.models import Model
 
 
@@ -29,6 +29,8 @@ contador_de_clases = 0
 RUTA_ENTRENAMIENTO = 'C:/Users/jbior/Documents/proyecto/MonitoreoDeFrutas/modelo/data/archive/dataset/train/'
 RUTA_PRUEBAS = 'C:/Users/jbior/Documents/proyecto/MonitoreoDeFrutas/modelo/data/archive/dataset/test/'
 RUTA_MODELO = 'C:/Users/jbior/Documents/proyecto/MonitoreoDeFrutas/modelo/'
+
+ejecucion_con_grafica = False
 
 
 for nombre_dir, directorios, archivos in os.walk(RUTA_ENTRENAMIENTO):
@@ -48,20 +50,21 @@ for d in clases:
     [(k, v)] = d.items()
     print('{:<15} {:<15}'.format(k, v))
 
-## ... aun explorando graficas
+## Si la ejecucion_con_grafica esta activa muestra una grafica de barras con el numero de coincidencias por categoria.
 
-ocurrencias = []
-etiquetas = []
-for d in clases:
-    [(k, v)] = d.items()
-    etiquetas.append(k)
-    ocurrencias.append(v)
+if ejecucion_con_grafica:
+    ocurrencias = []
+    etiquetas = []
+    for d in clases:
+       [(k, v)] = d.items()
+       etiquetas.append(k)
+       ocurrencias.append(v)
 
-plt.figure()
-plt.bar(range(len(ocurrencias)), ocurrencias, color = ['yellow', 'orange', 'orange', 'green', 'green', 'yellow'], alpha = .7)
-plt.xticks(range(len(ocurrencias)), etiquetas, rotation = 30)
-plt.title('Numero de ocurrencias por etiqueta')
-plt.show()
+    plt.figure()
+    plt.bar(range(len(ocurrencias)), ocurrencias, color = ['yellow', 'orange', 'orange', 'green', 'green', 'yellow'], alpha = .7)
+    plt.xticks(range(len(ocurrencias)), etiquetas, rotation = 30)
+    plt.title('Numero de ocurrencias por etiqueta')
+    plt.show()
 
 ## Se generan mas imagenes a partir de la existentes
 
@@ -73,6 +76,7 @@ data_generada = ImageDataGenerator(
     validation_split = .3
 )
 
+## Se perpara la data de entrenamiento
 data_entrenamiento = data_generada.flow_from_directory(
     directory = RUTA_ENTRENAMIENTO,
     target_size = (256, 256),
@@ -81,6 +85,7 @@ data_entrenamiento = data_generada.flow_from_directory(
     subset = 'training'
 )
 
+## Se prepara data para validacion
 data_validacion = data_generada.flow_from_directory(
     directory = RUTA_ENTRENAMIENTO,
     target_size = (256, 256),
@@ -104,7 +109,7 @@ X = Dense(100, activation = 'relu', name = 'Dense2')(X)
 X = Dropout(.1)(X)
 X = Dense(6, activation = 'softmax', name = 'Dense3')(X)
 
-modelo = Model(inputs = X_input, outputs = X, name = 'Fruit_Classifer')
+modelo = Model(inputs = X_input, outputs = X, name = 'Monitoreo_de_Frutas')
 
 print(modelo.summary())
 
