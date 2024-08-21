@@ -42,7 +42,7 @@ Es importante tener un ambiente adecuado para ejecutar los componentes, en espec
 |pandas      | 2.0.3  |
 |numpy       | 1.23.5 |
 
-### Ejecucion del modelo
+### Ejecucion del modelo (Paso opcional)
 
 **Nota** Es importante resaltar que no es estrictiamente necesaria la ejecución del modelo para ejecutar la solución.
 
@@ -61,6 +61,6 @@ Este es un ejemplo de la gráfica generada:
 ![Grafica de coincidencias](figura1.png)
 
 
-### Ejecutar el modelo (Paso opcional)
-
 ### Ejecutar la aplicación
+
+WIP
