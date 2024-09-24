@@ -2,16 +2,18 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, QFileDialog, QHBoxLayout
 from PyQt5.QtGui import QPixmap, QColor
 from PyQt5.QtCore import Qt
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras.preprocessing import image
+import numpy as np
 
 class VentanaSolucion(QWidget):
-    etiquetas = {
-        "freshapples": "Manzana fresca",
-        "freshbanana": "Banana fresca",
-        "freshoranges": "Naranja fresca",
-        "rottenapples": "Manzana podrida",
-        "rottenbanana": "Banana podrida",
-        "rottenoranges": "Naranja podrida"
-    }
+
+    # Cargar el modelo desde el archivo .keras
+    modelo = keras.models.load_model('C:/Users/jbior/Documents/proyecto/MonitoreoDeFrutas/modelo/modelo.keras')
+
+    #Etiquetas para desplegar como resultado
+    etiquetas = ["Manzana fresca", "Banana Fresca", "Naranja Fresca", "Manzana Podrida", "Banana Podrida", "Naranja Podrida"]
 
     def __init__(self):
         super().__init__()
@@ -56,6 +58,7 @@ class VentanaSolucion(QWidget):
         # Configurar el layout en la ventana
         self.setLayout(layout)
 
+
     def open_image(self):
         # Abrir un diálogo para seleccionar la imagen
         image_path, _ = QFileDialog.getOpenFileName(self, 'Seleccionar imagen', '', 'Imágenes (*.png *.xpm *.jpg *.jpeg)')
@@ -66,9 +69,26 @@ class VentanaSolucion(QWidget):
             scaled_pixmap = pixmap.scaled(250, 250, Qt.KeepAspectRatio)
             self.etiqueta_imagen.setPixmap(scaled_pixmap)
 
-            # Mostrar el nombre del archivo debajo de la imagen
-            file_name = image_path.split('/')[-1]
-            self.etiqueta_clase.setText(file_name)
+            # Mostrar el el resultado de clasificar la imagen
+            clase_imagen = self.clasificar_imagen(image_path)
+            self.etiqueta_clase.setText(clase_imagen)
+    
+    def clasificar_imagen(self, ruta_imagen):
+        # Cargar la imagen con el tamaño adecuado
+        img = image.load_img(ruta_imagen, target_size=(256, 256))
+
+        # Convertir la imagen a un array numpy y escalar los valores de píxeles
+        img_array = image.img_to_array(img)
+        img_array = np.expand_dims(img_array, axis=0)  # Añadir un nuevo eje para el batch
+        img_array /= 255.0  # Escalar la imagen entre 0 y 1
+
+        # Realizar la predicción
+        prediccion = self.modelo.predict(img_array)
+
+        # Obtener el índice de la clase con la mayor probabilidad
+        clase_predicha = np.argmax(prediccion, axis=1)[0] 
+
+        return self.etiquetas[clase_predicha]
 
 # Iniciar la aplicación
 app = QApplication(sys.argv)

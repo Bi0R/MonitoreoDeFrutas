@@ -30,7 +30,7 @@ RUTA_ENTRENAMIENTO = 'C:/Users/jbior/Documents/proyecto/MonitoreoDeFrutas/modelo
 RUTA_PRUEBAS = 'C:/Users/jbior/Documents/proyecto/MonitoreoDeFrutas/modelo/data/archive/dataset/test/'
 RUTA_MODELO = 'C:/Users/jbior/Documents/proyecto/MonitoreoDeFrutas/modelo/'
 
-ejecucion_con_grafica = False
+ejecucion_con_grafica = True
 
 
 for nombre_dir, directorios, archivos in os.walk(RUTA_ENTRENAMIENTO):
@@ -61,7 +61,7 @@ if ejecucion_con_grafica:
        ocurrencias.append(v)
 
     plt.figure()
-    plt.bar(range(len(ocurrencias)), ocurrencias, color = ['yellow', 'orange', 'orange', 'green', 'green', 'yellow'], alpha = .7)
+    plt.bar(range(len(ocurrencias)), ocurrencias, color = ['yellow', 'orange', 'blue', 'green', 'red', 'yellow'], alpha = .7)
     plt.xticks(range(len(ocurrencias)), etiquetas, rotation = 30)
     plt.title('Numero de ocurrencias por etiqueta')
     plt.show()
@@ -76,7 +76,7 @@ data_generada = ImageDataGenerator(
     validation_split = .3
 )
 
-## Se perpara la data de entrenamiento
+## Se prepara la data de entrenamiento
 data_entrenamiento = data_generada.flow_from_directory(
     directory = RUTA_ENTRENAMIENTO,
     target_size = (256, 256),
@@ -96,7 +96,7 @@ data_validacion = data_generada.flow_from_directory(
 
 ## Se crea la arquitectura del modelo, se usa vgg16
 
-vgg16 = VGG16(include_top = False, weights = 'imagenet', input_shape = (224, 224, 3))
+vgg16 = VGG16(include_top = False, weights = 'imagenet', input_shape = (256, 256, 3))
 vgg16.trainable = False
 
 X_input = Input(shape = (256, 256, 3))
