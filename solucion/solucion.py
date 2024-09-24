@@ -39,7 +39,7 @@ class VentanaSolucion(QWidget):
 
         # Botón para seleccionar la imagen
         boton_examinar = QPushButton('Examinar', self)
-        boton_examinar.clicked.connect(self.open_image)
+        boton_examinar.clicked.connect(self.abrir_imagen)
         sub_layout.addWidget(boton_examinar)
         layout.addLayout(sub_layout)
 
@@ -59,18 +59,18 @@ class VentanaSolucion(QWidget):
         self.setLayout(layout)
 
 
-    def open_image(self):
+    def abrir_imagen(self):
         # Abrir un diálogo para seleccionar la imagen
-        image_path, _ = QFileDialog.getOpenFileName(self, 'Seleccionar imagen', '', 'Imágenes (*.png *.xpm *.jpg *.jpeg)')
+        ruta_imagen, _ = QFileDialog.getOpenFileName(self, 'Seleccionar imagen', '', 'Imágenes (*.png *.xpm *.jpg *.jpeg)')
         
-        if image_path:
+        if ruta_imagen:
             # Cargar y mostrar la imagen en el QLabel
-            pixmap = QPixmap(image_path)
+            pixmap = QPixmap(ruta_imagen)
             scaled_pixmap = pixmap.scaled(250, 250, Qt.KeepAspectRatio)
             self.etiqueta_imagen.setPixmap(scaled_pixmap)
 
             # Mostrar el el resultado de clasificar la imagen
-            clase_imagen = self.clasificar_imagen(image_path)
+            clase_imagen = self.clasificar_imagen(ruta_imagen)
             self.etiqueta_clase.setText(clase_imagen)
     
     def clasificar_imagen(self, ruta_imagen):
