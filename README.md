@@ -63,4 +63,4 @@ Este es un ejemplo de la gráfica generada:
 
 ### Ejecutar la aplicación
 
-WIP
+La solución usada para probar el funcionamiento del modelo es una aplicación de escritorio que utiliza pyQT para crear una ventana donde se puede elegir una imagen para realizar su clasificación
