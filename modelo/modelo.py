@@ -61,7 +61,7 @@ if ejecucion_con_grafica:
        ocurrencias.append(v)
 
     plt.figure()
-    plt.bar(range(len(ocurrencias)), ocurrencias, color = ['yellow', 'orange', 'blue', 'green', 'red', 'yellow'], alpha = .7)
+    plt.bar(range(len(ocurrencias)), ocurrencias, color = ['yellow', 'orange', 'blue', 'green', 'red', 'purple'], alpha = .7)
     plt.xticks(range(len(ocurrencias)), etiquetas, rotation = 30)
     plt.title('Numero de ocurrencias por etiqueta')
     plt.show()
